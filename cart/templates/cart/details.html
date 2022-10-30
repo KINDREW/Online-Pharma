@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Cart{% endblock %}
+{% block content %}
+
+<div class="breadcrumbs">
+<div class="container">
+<div class="row align-items-center">
+<div class="col-lg-6 col-md-6 col-12">
+<div class="breadcrumbs-content">
+<h1 class="page-title">Cart</h1>
+</div>
+</div>
+<div class="col-lg-6 col-md-6 col-12">
+<ul class="breadcrumb-nav">
+<li><a href="{% url 'shop:shop' %}"><i class="lni lni-home"></i> Home</a></li>
+<li><a href="{% url 'shop:shop' %}">Shop</a></li>
+<li>Cart</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div class="shopping-cart section">
+<div class="container">
+<div class="cart-list-head">
+{% with total_items=cart|length %}
+
+{% if total_items > 0 %}
+<div class="cart-list-title">
+<div class="row">
+<div class="col-lg-1 col-md-1 col-12">
+</div>
+<div class="col-lg-4 col-md-3 col-12">
+<p>Product Name</p>
+</div>
+<div class="col-lg-2 col-md-2 col-12">
+<p>Quantity</p>
+</div>
+<div class="col-lg-2 col-md-2 col-12">
+<p>Unit Price</p>
+</div>
+<div class="col-lg-2 col-md-2 col-12">
+<p>Total Price</p>
+</div>
+<div class="col-lg-1 col-md-2 col-12">
+<p>Remove</p>
+</div>
+</div>
+</div>
+
+{% for item in cart %}
+{% with product=item.product %}
+
+<div class="cart-single-list">
+<div class="row align-items-center">
+<div class="col-lg-1 col-md-1 col-12">
+<a href="{{ product.get_absolute_url }}"><img src="{% if product.image %}{{ product.image.url}}
+{% else %}{% static 'img/no_image.png' %}{% endif %}" alt="Product Image"></a>
+</div>
+<div class="col-lg-4 col-md-3 col-12">
+<h5 class="product-name"><a href="{{ product.get_absolute_url }}">
+{{ product.name }}</a></h5>
+<p class="product-des">
+<span><em>Category:</em> {{product.category}}</span>
+</p>
+</div>
+<div class="col-lg-2 col-md-2 col-12">
+<div class="count-input">
+<form action="{% url 'cart:cart_add' product.id %}" method="POST">
+{{ item.update_quantity_form.quantity }}
+{{ item.update_quantity_form.override }}
+<div class="button">
+<input class ="btn" type="submit" value="Update">
+</div>
+{% csrf_token %}
+</form>
+</div>
+</div>
+<div class="col-lg-2 col-md-2 col-12">
+<p>GH₵{{ item.price }}</p>
+</div>
+<div class="col-lg-2 col-md-2 col-12">
+<p>GH₵{{ item.total_price }}</p>
+</div>
+<div class="col-lg-1 col-md-2 col-12">
+<a class="remove-item" href="{% url 'cart:cart_remove' product.id %}"><i class="lni lni-close"></i></a>
+</div>
+</div>
+</div>
+
+{% endwith %}
+{% endfor %}
+{% else %}
+<div class="cart-list-title">
+<div class="row">
+<div class="col-lg-4 col-md-3 col-12">
+<h4>Your cart is empty</h4>
+</div>
+</div>
+</div>
+{% endif %}
+{% endwith %}
+</div>
+<div class="row">
+<div class="col-12">
+
+<div class="total-amount">
+<div class="row">
+<div class="col-lg-8 col-md-6 col-12">
+<div class="left">
+<div class="coupon">
+<form action="{% url 'coupons:apply' %}" method="POST">
+{{ coupon_apply_form }}
+<div class="button">
+<button type="submit" class="btn">Apply Coupon</button>
+</div>
+{% csrf_token %}
+</form>
+
+</div>
+</div>
+</div>
+
+<div class="col-lg-4 col-md-6 col-12">
+<div class="right">
+<ul>
+<li>Cart Subtotal<span>GH₵{{ cart.get_total|floatformat:2 }}</span></li>
+<li>Shipping<span>Free</span></li>
+{% if cart.coupon %}
+<li class="last">Coupon<span>{{ cart.coupon.code }}</span></li>
+<li class="last">Coupon Discount<span style ="color:red">{{ cart.coupon.discount }}%</span></li>
+<li class="last">Amount off<span style ="color:red">-GH₵{{ cart.get_discount|floatformat:2 }}</span></li>
+<li class="last">You Pay<span>GH₵{{ cart.get_total_price_after_discount|floatformat:2 }}</span></li>
+{% else %}
+<li class="last">You Pay<span>GH₵{{ cart.get_total|floatformat:2 }}</span></li>
+{% endif %}
+</ul>
+<div class="button">
+<a href="{% url 'orders:order_create' %}" class="btn">Checkout</a>
+<a href="{% url 'shop:shop' %}" class="btn btn-alt">Continue shopping</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}

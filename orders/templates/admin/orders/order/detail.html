@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% block title %}
+Order {{ order.id }} {{ block.super }}
+{% endblock %}
+{% block content %}
+<div class="breadcrumbs">
+<div class="container">
+<div class="row align-items-center">
+<div class="col-lg-6 col-md-6 col-12">
+<div class="breadcrumbs-content">
+<h1 class="page-title">Order History</h1>
+</div>
+</div>
+<div class="col-lg-6 col-md-6 col-12">
+<ul class="breadcrumb-nav">
+<li><a href="{% url "shop:shop" %}">Home</a></li>
+<li><a href="{% url "orders:order_history" %}">Orders</a></li>
+<li><a href="#">Order {{order.id }}</a></li>
+<li> Detail</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="shopping-cart section">
+<div class="container">
+<div class="cart-list-head">
+
+<div class="cart-list-title">
+<div class="row">
+<div class="col-lg-12 col-md-3 col-12">
+<h2 style="text-align:center;">Order {{ order.id }}</h2>
+</div>
+</div>
+</div>
+<div class="cart-list-title">
+<div class="row">
+<div class="col-lg-12 col-md-3 col-12">
+<a href="#" onclick="window.print();">Print order</a>
+</div>
+</div>
+</div>
+<div class="cart-list-title">
+<div class="row">
+<div class="col-lg-2 col-md-3 col-12">
+<p>Created</p>
+</div>
+<div class="col-lg-2 col-md-3 col-12">
+<p>E-mail</p>
+</div>
+<div class="col-lg-2 col-md-3 col-12">
+<p>Address</p>
+</div>
+<div class="col-lg-2 col-md-3 col-12">
+<p>Total amount	</p>
+</div>
+<div class="col-lg-2 col-md-3 col-12">
+<p>Paid</p>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="cart-single-list">
+<div class="row align-items-center">
+
+<div class="col-lg-2 col-md-3 col-12">
+{{ order.created }}
+</div>
+<div class="col-lg-2 col-md-3 col-12">
+{{ order.user.email_address }}
+</div>
+<div class="col-lg-2 col-md-3 col-12">
+{{ order.address }},
+{{ order.region }}
+</div>
+<div class="col-lg-2 col-md-3 col-12">
+GH₵{{ order.get_total_cost }}
+</div>
+<div class="col-lg-2 col-md-3 col-12">
+{% if order.paid %}
+<i class="fas fa-check" style="color: #40c404;"></i>
+{% else %}<i class="lni lni-close" style="color: #c40404;"></i>{% endif %}
+</div>
+</div>
+
+
+
+<div class="cart-list-title">
+<div class="row">
+<div class="col-lg-12 col-md-3 col-12">
+<h2 style="text-align:center;">Items bought</h2>
+</div>
+</div>
+</div>
+
+<div class="cart-list-title">
+<div class="row">
+<div class="col-lg-3 col-md-3 col-12">
+<p>Product</p>
+</div>
+<div class="col-lg-3 col-md-3 col-12">
+<p>Price	</p>
+</div>
+<div class="col-lg-3 col-md-3 col-12">
+<p>Quantity</p>
+</div>
+<div class="col-lg-3 col-md-3 col-12">
+<p>Total</p>
+</div>
+
+</div>
+</div>
+
+
+<div class="cart-single-list">
+<div class="row align-items-center">
+{% for item in order.items.all %}
+<div class="col-lg-3 col-md-3 col-12">
+{{ item.product.name }}
+</div>
+<div class="col-lg-3 col-md-3 col-12">
+GH₵{{ item.price }}
+</div>
+<div class="col-lg-3 col-md-3 col-12">
+{{ item.quantity}}
+</div>
+<div class="col-lg-3 col-md-3 col-12">
+GH₵{{ item.get_cost }}
+</div>
+{% endfor %}
+</div>
+
+<div class="cart-list-title">
+<div class="row">
+<div class="col-lg-3 col-md-3 col-12">
+<h6>Total</h6>
+</div>
+<div class="col-lg-3 col-md-3 col-12">
+<h6></h6>
+</div>
+<div class="col-lg-3 col-md-3 col-12">
+<h6></h6>
+</div>
+<div class="col-lg-3 col-md-3 col-12">
+<h6>GH₵{{ order.get_total_cost }}</h6>
+</div>
+</div>
+</div>
+
+
+</div>
+</div>
+
+{% endblock %}

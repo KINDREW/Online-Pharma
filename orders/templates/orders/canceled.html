@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Payment Canceled{% endblock %}
+{% block content %}
+
+<div class="maill-success">
+<div class="d-table">
+<div class="d-table-cell">
+<div class="container">
+<div class="success-content">
+<i class="lni lni-close" style="color: #c40404;"></i>
+
+
+<h2>Your payment was not been processed</h2>
+<p>There was a problem processing your payment.</p>
+<div class="button">
+<a href="{% url 'shop:shop' %}" class="btn">Back to Shopping</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Order History{% endblock %}
+{% block content %}
+<div class="breadcrumbs">
+<div class="container">
+<div class="row align-items-center">
+<div class="col-lg-6 col-md-6 col-12">
+<div class="breadcrumbs-content">
+<h1 class="page-title">Order History</h1>
+</div>
+</div>
+<div class="col-lg-6 col-md-6 col-12">
+<ul class="breadcrumb-nav">
+<li><a href="{% url 'shop:shop' %}"><i class="lni lni-home"></i> Home</a></li>
+<li><a href="{% url 'shop:shop' %}">Shop</a></li>
+<li>Order History</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div class="shopping-cart section">
+<div class="container">
+<div class="cart-list-head">
+{% with total_items=orders|length %}
+
+{% if total_items > 0 %}
+<div class="cart-list-title">
+<div class="row">
+<div class="col-lg-2 col-md-3 col-12">
+<p>Order ID</p>
+</div>
+<div class="col-lg-2 col-md-2 col-12">
+<p>Address</p>
+</div>
+<div class="col-lg-2 col-md-2 col-12">
+<p>Created</p>
+</div>
+<div class="col-lg-2 col-md-2 col-12">
+<p>Paid</p>
+</div>
+<div class="col-lg-2 col-md-2 col-12">
+<p>Order Details</p>
+</div>
+</div>
+</div>
+
+{% for item in order_list %}
+{% with product=item %}
+<div class="cart-single-list">
+<div class="row align-items-center">
+
+<div class="col-lg-2 col-md-3 col-12">
+<h5 class="product-name"><a href="{{ product.get_absolute_url }}">
+{{ product.id }}</a></h5>
+</div>
+<div class="col-lg-2 col-md-2 col-12">
+<div class="count-input">
+{{ product.address }}
+</div>
+</div>
+<div class="col-lg-2 col-md-2 col-12">
+<p>{{ product.created }}</p>
+</div>
+<div class="col-lg-2 col-md-2 col-12">
+<p>
+{% if product.paid %}
+    <i class="fas fa-check" style="color: #40c404;"></i>
+    {% else %}
+    <i class="lni lni-close" style="color: #c40404;"></i>
+{% endif %}
+     </p>
+</div>
+<div class="col-lg-2 col-md-2 col-12">
+<p><a href = '{{ product.get_absolute_url }}'>View</a></p>
+</div>
+</div>
+</div>
+
+{% endwith %}
+{% endfor %}
+{% else %}
+<div class="cart-list-title">
+<div class="row">
+<div class="col-lg-4 col-md-3 col-12">
+<h4>You have no orders yet</h4>
+</div>
+</div>
+</div>
+{% endif %}
+{% endwith %}
+</div>
+<div class="row">
+<div class="col-12">
+
+<div class="total-amount">
+<div class="row">
+<div class="col-lg-8 col-md-6 col-12">
+<div class="left">
+
+</div>
+</div>
+
+<div class="col-lg-4 col-md-6 col-12">
+<div class="right">
+<div class="button">
+<a href="{% url 'shop:shop' %}" class="btn btn-alt">Continue shopping</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

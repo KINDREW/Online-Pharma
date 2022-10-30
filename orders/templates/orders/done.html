@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Payment successful{% endblock %}
+{% block content %}
+
+<div class="maill-success">
+<div class="d-table">
+<div class="d-table-cell">
+<div class="container">
+<div class="success-content">
+<!-- <i class="fas fa-check-circle" style="color: #40c404;"></i> -->
+<i class="fas fa-check" style="color: #40c404;"></i>
+<h2>Your payment was successful</h2>
+<p>Thanks for patronizing us, our agent will contact you ASAP.</p>
+<div class="button">
+<a href="{% url 'shop:shop' %}" class="btn">Back to Home</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

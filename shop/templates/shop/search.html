@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Search{% endblock %}
+{% block content %}
+
+<div class="breadcrumbs">
+<div class="container">
+<div class="row align-items-center">
+<div class="col-lg-6 col-md-6 col-12">
+<div class="breadcrumbs-content">
+<h1 class="page-title">Showing Results for "{{query}}"</h1>
+</div>
+</div>
+<div class="col-lg-6 col-md-6 col-12">
+<ul class="breadcrumb-nav">
+<li><a href="{% url 'shop:shop' %}"><i class="lni lni-home"></i> Home</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<section class="product-grids section">
+<div class="container">
+<div class="row">
+<div class="col-lg-3 col-12">
+<div class="product-sidebar">
+<div class="single-widget search">
+<h3>Search Product</h3>
+<form action="{% url 'shop:post_search' %}">
+{{form_search.as_p}}
+{% csrf_token %}
+<button type="submit"><i class="lni lni-search-alt"></i></button>
+</form>
+</div>
+
+
+
+
+</div>
+</div>
+<div class="col-lg-9 col-12">
+<div class="product-grids-head">
+<div class="product-grid-topbar">
+<div class="row align-items-center">
+<div class="col-lg-7 col-md-8 col-12">
+<div class="product-sorting">
+<h6>{% with results.count as total_results %} Found {{total_results}}
+  result{{total_results|pluralize}} {% endwith %}</h6>
+</div>
+</div>
+<div class="col-lg-5 col-md-4 col-12">
+<nav>
+<div class="nav nav-tabs" id="nav-tab" role="tablist">
+<button class="nav-link active" id="nav-grid-tab" data-bs-toggle="tab" data-bs-target="#nav-grid" type="button" role="tab" aria-controls="nav-grid" aria-selected="true"><i class="lni lni-grid-alt"></i></button>
+<button class="nav-link" id="nav-list-tab" data-bs-toggle="tab" data-bs-target="#nav-list" type="button" role="tab" aria-controls="nav-list" aria-selected="false"><i class="lni lni-list"></i></button>
+</div>
+</nav>
+</div>
+</div>
+</div>
+<div class="tab-content" id="nav-tabContent">
+<div class="tab-pane fade show active" id="nav-grid" role="tabpanel" aria-labelledby="nav-grid-tab">
+<div class="row">
+
+{% for product in results %}
+
+<div class="col-lg-4 col-md-6 col-12">
+<div class="single-product">
+
+<div class="product-image">
+<img src="{% if product.image %}{{ product.image.url }} {% else %}{% static 'images/no_image.png' %}{% endif %}"alt="#">
+<div class="button">
+<a href="{{ product.get_absolute_url }}" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>
+</div>
+</div>
+<div class="product-info">
+<span class="category">{{product.category}}</span>
+<h4 class="title">
+<a href="{{ product.get_absolute_url }}">{{product.name}}</a>
+</h4>
+<ul class="review">
+<li><i class="lni lni-star-filled"></i></li>
+<li><i class="lni lni-star-filled"></i></li>
+<li><i class="lni lni-star-filled"></i></li>
+<li><i class="lni lni-star-filled"></i></li>
+<li><i class="lni lni-star"></i></li>
+<li><span>4.0 Review(s)</span></li>
+</ul>
+<div class="price">
+<span>{{product.price}}</span>
+</div>
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
+<div class="row">
+<div class="col-12">
+<div class="pagination left">
+<ul class="pagination-list">
+<li>
+<a {% if post.has_previous %}  href="?page={{ post.previous_page_number }}" {% else %} class = "notactive" {% endif %}><i class="lni lni-chevron-left"></i>Prev</a>
+<!-- </li>
+{% for i in post.paginator.get_elided_page_range %}
+<li {% if post.number == i %}class = "active" {% endif %}><a href="?page={{ i }}">{{ i }}</a></li>
+{% endfor %} -->
+<li><a {% if post.has_next %} href="?page={{ post.next_page_number }}" {% else %} class = "notactive" {% endif %}>Next<i class="lni lni-chevron-right"></i></a></li>
+<span class="current">
+Page {{ post.number }} of {{ post.paginator.num_pages }}
+</span>
+</ul>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="tab-pane fade" id="nav-list" role="tabpanel" aria-labelledby="nav-list-tab">
+<div class="row">
+
+
+<div class="col-lg-12 col-md-12 col-12">
+{% for product in results %}
+<div class="single-product">
+<div class="row align-items-center">
+<div class="col-lg-4 col-md-4 col-12">
+<div class="product-image">
+<img src="{% if product.image %}{{ product.image.url }} {% else %}{% static 'images/no_image.png' %}{% endif %}" alt="#">
+<div class="button">
+<a href="{{ product.get_absolute_url }}" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>
+</div>
+</div>
+</div>
+<div class="col-lg-8 col-md-8 col-12">
+<div class="product-info">
+<span class="category">{{product.category}}</span>
+<h4 class="title">
+<a href="{{ product.get_absolute_url }}">{{product.name}}</a>
+</h4>
+<ul class="review">
+<li><i class="lni lni-star-filled"></i></li>
+<li><i class="lni lni-star-filled"></i></li>
+<li><i class="lni lni-star-filled"></i></li>
+<li><i class="lni lni-star-filled"></i></li>
+<li><i class="lni lni-star"></i></li>
+<li><span>4.0 Review(s)</span></li>
+</ul>
+<div class="price">
+<span>GH₵{{product.price}}</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
+</div>
+<div class="row">
+ <div class="col-12">
+
+<div class="pagination left">
+<ul class="pagination-list">
+
+<li>
+<a {% if post.has_previous %}  href="?page={{ post.previous_page_number }}" {% else %} class = "notactive" {% endif %}><i class="lni lni-chevron-left"> Prev</i></a>
+</li>
+
+
+<li><a {% if post.has_next %} href="?page={{ post.next_page_number }}" {% else %} class = "notactive" {% endif %}>Next <i class="lni lni-chevron-right"></i></a></li>
+<span class="current">
+Page {{ post.number }} of {{ post.paginator.num_pages }}
+</span>
+
+</ul>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+{% endblock %}

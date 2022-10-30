@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Add Product{% endblock %}
+{% block content %}
+<div class="breadcrumbs">
+<div class="container">
+<div class="row align-items-center">
+<div class="col-lg-6 col-md-6 col-12">
+<div class="breadcrumbs-content">
+<h1 class="page-title">Add Product</h1>
+</div>
+</div>
+<div class="col-lg-6 col-md-6 col-12">
+<ul class="breadcrumb-nav">
+<li><a href="{% url 'shop:shop' %}"><i class="lni lni-home"></i> Home</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<section class="checkout-wrapper section">
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-lg-8">
+<div class="checkout-steps-form-style-1">
+<ul id="accordionExample">
+<li>
+<h6 class="title" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">Product Details </h6>
+<section class="checkout-steps-form-content collapse show" id="collapseThree" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+<div class="row">
+<div class="col-md-12">
+<div class="single-form form-default">
+<form method="POST" class = "form-input" enctype="multipart/form-data">
+    {{form.as_p}}
+    {% csrf_token %}
+<div class="col-md-12">
+<div class="single-form button">
+<button type ="submit" class="btn" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">Create Product</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+
+{% endblock %}

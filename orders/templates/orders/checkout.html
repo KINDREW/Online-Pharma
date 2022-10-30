@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Checkout{% endblock %}
+{% block content %}
+
+<section class="checkout-wrapper section">
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-lg-8">
+<div class="checkout-steps-form-style-1">
+<ul id="accordionExample">
+<li>
+<h6 class="title" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">Your Personal Details </h6>
+<section class="checkout-steps-form-content collapse show" id="collapseThree" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+<div class="row">
+<div class="col-md-12">
+<div class="single-form form-default">
+<form method="POST" class = "form-input">
+    {{form.as_p}}
+    {% csrf_token %}
+<div class="col-md-12">
+<div class="checkout-payment-option">
+<h6 class="heading-6 font-weight-400 payment-title">Select Delivery
+Option</h6>
+<div class="payment-option-wrapper">
+<div class="single-payment-option">
+<input type="radio" name="shipping" checked id="shipping-1">
+<label for="shipping-1">
+<img src="{%static 'images/shipping/shipping-1.png'%}" alt="Sipping">
+<p>Standerd Shipping</p>
+<span class="price">GH₵0</span>
+</label>
+</div>
+<div class="single-payment-option">
+<input type="radio" name="shipping" id="shipping-2">
+<label for="shipping-2">
+<img src="{%static 'images/shipping/shipping-2.png'%}" alt="Sipping">
+<p>Standerd Shipping</p>
+<span class="price">GH₵0</span>
+</label>
+</div>
+<div class="single-payment-option">
+<input type="radio" name="shipping" id="shipping-3">
+<label for="shipping-3">
+<img src="{%static 'images/shipping/shipping-3.png'%}" alt="Sipping">
+<p>Standerd Shipping</p>
+<span class="price">GH₵0</span>
+</label>
+</div>
+<div class="single-payment-option">
+<input type="radio" name="shipping" id="shipping-4">
+<label for="shipping-4">
+<img src="{%static 'images/shipping/shipping-4.png'%}" alt="Sipping">
+<p>Standerd Shipping</p>
+<span class="price">GH₵0</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+
+<div class="col-md-12">
+<div class="single-form button">
+<button type ="submit" class="btn" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">next
+step</button>
+</form>
+</div>
+</div>
+</div>
+</section>
+</li>
+</ul>
+</div>
+</div>
+<div class="col-lg-4">
+<div class="checkout-sidebar">
+<div class="checkout-sidebar-coupon">
+<p>Appy Coupon to get discount!</p>
+<form action="{% url 'coupons:apply' %}" method="POST">
+{{ coupon_apply_form }}
+<div class="button">
+<button type="submit" class="btn">Apply</button>
+</div>
+{% csrf_token %}
+</form>
+</div>
+<div class="checkout-sidebar-price-table mt-30">
+<h5 class="title">Pricing Table</h5>
+{% for item in cart %}
+{% with product=item.product %}
+<div class="sub-total-price">
+<div class="total-price">
+<p class="value">{{product.name}} Total</p>
+<p class="price">GH₵{{item.total_price}}</p>
+</div>
+</div>
+{% endwith %}
+{% endfor %}
+<div class="total-payable">
+<div class="payable-price">
+<p class="value">Subotal Price:</p>
+<p class="price">GH₵{{ cart.get_total|floatformat:2 }}</p>
+</div>
+</div>
+{% if cart.coupon %}
+<div class="total-payable">
+<div class="payable-price">
+<p class="value">Amount off:</p>
+<p class="price">-GH₵{{ cart.get_discount|floatformat:2 }}</p>
+</div>
+</div>
+{% endif %}
+<div class="total-payable">
+<div class="payable-price">
+<p class="value">Total Payable:</p>
+<p class="price">GH₵{{ cart.get_total_price_after_discount|floatformat:2 }}</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+{% endblock %}

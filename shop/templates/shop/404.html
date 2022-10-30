@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+
+<!-- Mirrored from demo.graygrids.com/themes/shopgrids/404.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 Jun 2022 12:31:44 GMT -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="x-ua-compatible" content="ie=edge" />
+<title>404 Error - ShopPharm</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link  type="image/x-icon" href="{% static 'images/favicon.svg' %}" rel="shortcut icon">
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/LineIcons.3.0.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<div class="preloader">
+<div class="preloader-inner">
+<div class="preloader-icon">
+<span></span>
+<span></span>
+</div>
+</div>
+</div>
+
+
+<div class="error-area">
+<div class="d-table">
+<div class="d-table-cell">
+<div class="container">
+<div class="error-content">
+<h1>404</h1>
+<h2>Oops! Page Not Found!</h2>
+<p>The page you are looking for does not exist. It might have been moved or deleted.</p>
+<div class="button">
+<a href="{% url 'shop:shop' %}" class="btn">Back to Home</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<script src="assets/js/bootstrap.min.js"></script>
+<script>
+    window.onload = function () {
+      window.setTimeout(fadeout, 500);
+    }
+
+    function fadeout() {
+      document.querySelector('.preloader').style.opacity = '0';
+      document.querySelector('.preloader').style.display = 'none';
+    }
+  </script>
+</body>
+
+<!-- Mirrored from demo.graygrids.com/themes/shopgrids/404.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 Jun 2022 12:31:44 GMT -->
+</html>
